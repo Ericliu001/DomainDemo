@@ -1,6 +1,6 @@
 package com.example.ericliu.domaindemo.repository.base;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by ericliu on 12/04/2016.
@@ -19,5 +19,5 @@ public interface Repository<T> {
 
     void remove(Specification specification) throws Exception;
 
-    List<T> query(Specification specification) throws Exception;
+    Collection<T> query(Specification specification) throws Exception;
 }

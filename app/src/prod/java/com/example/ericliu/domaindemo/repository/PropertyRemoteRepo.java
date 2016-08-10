@@ -4,7 +4,7 @@ import com.example.ericliu.domaindemo.model.Property;
 import com.example.ericliu.domaindemo.repository.base.Repository;
 import com.example.ericliu.domaindemo.repository.base.Specification;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by ericliu on 10/08/2016.
@@ -42,7 +42,7 @@ public class PropertyRemoteRepo implements Repository<Property> {
     }
 
     @Override
-    public List<Property> query(Specification specification) throws Exception {
+    public Collection<Property> query(Specification specification) throws Exception {
         return null;
     }
 }

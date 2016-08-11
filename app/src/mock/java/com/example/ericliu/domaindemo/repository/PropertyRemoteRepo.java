@@ -1,10 +1,14 @@
 package com.example.ericliu.domaindemo.repository;
 
+import com.example.ericliu.domaindemo.R;
 import com.example.ericliu.domaindemo.model.Property;
+import com.example.ericliu.domaindemo.parsing.JSONHandler;
 import com.example.ericliu.domaindemo.repository.base.Repository;
 import com.example.ericliu.domaindemo.repository.base.Specification;
 
 import java.util.Collection;
+
+import static com.example.ericliu.domaindemo.application.MyApplication.mApplication;
 
 /**
  * Created by ericliu on 10/08/2016.
@@ -13,6 +17,10 @@ import java.util.Collection;
 public class PropertyRemoteRepo implements Repository<Property> {
     @Override
     public Property get(Specification specification) throws Exception {
+
+        String jsonStr = JSONHandler
+                .parseResource(mApplication, R.raw.property_search);
+
         return null;
     }
 

@@ -3,8 +3,10 @@ package com.example.ericliu.domaindemo.repository;
 import com.example.ericliu.domaindemo.R;
 import com.example.ericliu.domaindemo.model.Property;
 import com.example.ericliu.domaindemo.parsing.JSONHandler;
+import com.example.ericliu.domaindemo.parsing.SearchResult;
 import com.example.ericliu.domaindemo.repository.base.Repository;
 import com.example.ericliu.domaindemo.repository.base.Specification;
+import com.google.gson.Gson;
 
 import java.util.Collection;
 
@@ -21,6 +23,9 @@ public class PropertyRemoteRepo implements Repository<Property> {
         String jsonStr = JSONHandler
                 .parseResource(mApplication, R.raw.property_search);
 
+        Gson gson = new Gson();
+
+        SearchResult searchResult = gson.fromJson(jsonStr, SearchResult.class);
         return null;
     }
 

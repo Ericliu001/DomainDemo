@@ -33,13 +33,17 @@ public class EliteViewHolder extends RecyclerView.ViewHolder {
         }
 
         if (p.getBathrooms() > 0) {
-            stringBuilder.append(", ");
+            if (stringBuilder.length() > 0) {
+                stringBuilder.append(", ");
+            }
             stringBuilder.append(p.getBathrooms());
             stringBuilder.append(" bath");
         }
 
         if (p.getCarspaces() > 0) {
-            stringBuilder.append(", ");
+            if (stringBuilder.length() > 0) {
+                stringBuilder.append(", ");
+            }
             stringBuilder.append(p.getCarspaces());
             stringBuilder.append(" car");
         }

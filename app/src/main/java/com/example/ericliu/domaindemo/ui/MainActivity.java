@@ -22,26 +22,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-
         if (savedInstanceState == null) {
             mPropertyListPresenter = new PropertyListPresenterImpl();
+            mPropertyListPresenter.onViewCreated(false);
             CacheFragment<PropertyListPresenter> cacheFragment = new CacheFragment<>();
             getFragmentManager().beginTransaction().add(cacheFragment, TAG).commit();
         } else {
             CacheFragment<PropertyListPresenter> cacheFragment;
             cacheFragment = (CacheFragment<PropertyListPresenter>) getFragmentManager().findFragmentByTag(TAG);
             mPropertyListPresenter = cacheFragment.getData();
+            mPropertyListPresenter.onViewCreated(true);
         }
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+
 
         mAdapter = new PropertyListAdapter(mPropertyListPresenter);
         mRecyclerView.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPropertyListPresenter.onViewDestroyed();
+        super.onDestroy();
     }
 }

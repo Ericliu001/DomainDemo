@@ -44,4 +44,44 @@ public class Property {
 
     @SerializedName("IsElite")
     private int isElite;
+
+    public String getAgencyLogoUrl() {
+        return agencyLogoUrl;
+    }
+
+    public int getBathrooms() {
+        return bathrooms;
+    }
+
+    public int getBedrooms() {
+        return bedrooms;
+    }
+
+    public int getCarspaces() {
+        return carspaces;
+    }
+
+    public String getDisplayPrice() {
+        return displayPrice;
+    }
+
+    public String getDisplayableAddress() {
+        return displayableAddress;
+    }
+
+    public String getTruncatedDescription() {
+        return truncatedDescription;
+    }
+
+    public String getRetinaDisplayThumbUrl() {
+        return retinaDisplayThumbUrl;
+    }
+
+    public String getSecondRetinaDisplayThumbUrl() {
+        return secondRetinaDisplayThumbUrl;
+    }
+
+    public int getIsElite() {
+        return isElite;
+    }
 }

@@ -6,7 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ericliu.domaindemo.R;
-import com.example.ericliu.domaindemo.model.Property;
+import com.example.ericliu.domaindemo.ui.EliteViewHolder;
+import com.example.ericliu.domaindemo.ui.OrdinaryViewHolder;
 import com.example.ericliu.domaindemo.ui.PropertyListPresenter;
 
 /**
@@ -16,48 +17,11 @@ import com.example.ericliu.domaindemo.ui.PropertyListPresenter;
 public class PropertyListAdapter extends RecyclerView.Adapter {
 
     public enum ViewType {
-        ELITE, ORDINARY;
+        ELITE, ORDINARY
 
     }
 
     private final PropertyListPresenter mPresenter;
-
-    public static class EliteViewHolder extends RecyclerView.ViewHolder {
-        protected Property mProperty;
-
-
-        public EliteViewHolder(View itemView) {
-            super(itemView);
-
-        }
-
-
-        public void setItemData(Property p) {
-            this.mProperty = p;
-
-        }
-
-
-    }
-
-
-    public static class OrdinaryViewHolder extends RecyclerView.ViewHolder {
-        protected Property mProperty;
-
-
-        public OrdinaryViewHolder(View itemView) {
-            super(itemView);
-
-        }
-
-
-        public void setItemData(Property p) {
-            this.mProperty = p;
-
-        }
-
-
-    }
 
 
     public PropertyListAdapter(PropertyListPresenter presenter) {
@@ -90,7 +54,11 @@ public class PropertyListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        mPresenter.onBindViewHolder(holder, position);
+        if (mPresenter.getItemViewType(position) == ViewType.ELITE) {
+            mPresenter.onBindViewHolder((EliteViewHolder) holder, position);
+        } else if (mPresenter.getItemViewType(position) == ViewType.ORDINARY) {
+            mPresenter.onBindViewHolder((OrdinaryViewHolder) holder, position);
+        }
     }
 
     @Override

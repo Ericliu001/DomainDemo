@@ -9,5 +9,5 @@ import com.google.gson.annotations.SerializedName;
 public class SearchResult {
 
     @SerializedName("ListingResults")
-    private ListingResults listingResults;
+    public ListingResults listingResults;
 }

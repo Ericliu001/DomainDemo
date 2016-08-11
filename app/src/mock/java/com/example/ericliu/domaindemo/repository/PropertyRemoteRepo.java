@@ -8,7 +8,7 @@ import com.example.ericliu.domaindemo.repository.base.Repository;
 import com.example.ericliu.domaindemo.repository.base.Specification;
 import com.google.gson.Gson;
 
-import java.util.Collection;
+import java.util.List;
 
 import static com.example.ericliu.domaindemo.application.MyApplication.mApplication;
 
@@ -20,12 +20,6 @@ public class PropertyRemoteRepo implements Repository<Property> {
     @Override
     public Property get(Specification specification) throws Exception {
 
-        String jsonStr = JSONHandler
-                .parseResource(mApplication, R.raw.property_search);
-
-        Gson gson = new Gson();
-
-        SearchResult searchResult = gson.fromJson(jsonStr, SearchResult.class);
         return null;
     }
 
@@ -55,7 +49,18 @@ public class PropertyRemoteRepo implements Repository<Property> {
     }
 
     @Override
-    public Collection<Property> query(Specification specification) throws Exception {
-        return null;
+    public List<Property> query(Specification specification) throws Exception {
+
+        String jsonStr = JSONHandler
+                .parseResource(mApplication, R.raw.property_search);
+
+        Gson gson = new Gson();
+
+        SearchResult searchResult = gson.fromJson(jsonStr, SearchResult.class);
+        if (searchResult == null || searchResult.listingResults == null || searchResult.listingResults.listings == null) {
+            return null;
+        }
+
+        return searchResult.listingResults.listings;
     }
 }

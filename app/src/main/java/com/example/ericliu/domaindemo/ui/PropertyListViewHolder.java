@@ -1,5 +1,6 @@
 package com.example.ericliu.domaindemo.ui;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +12,7 @@ import com.example.ericliu.domaindemo.model.Property;
  * Created by ericliu on 12/08/2016.
  */
 
-public class PropertyListViewHolder extends RecyclerView.ViewHolder {
+public abstract class PropertyListViewHolder extends RecyclerView.ViewHolder {
     protected TextView tvDisplayPrice, tvRoomNumber, tvAddress;
 
     public PropertyListViewHolder(View itemView) {
@@ -23,7 +24,8 @@ public class PropertyListViewHolder extends RecyclerView.ViewHolder {
 
 
 
-    public void setItemData(Property p) {
+
+    public void displayTexts(Property p) {
 
         tvDisplayPrice.setText(p.getDisplayPrice());
         StringBuilder stringBuilder = new StringBuilder();
@@ -51,5 +53,8 @@ public class PropertyListViewHolder extends RecyclerView.ViewHolder {
         tvRoomNumber.setText(stringBuilder.toString());
         tvAddress.setText(p.getDisplayableAddress());
 
+
     }
+
+    abstract void displayImages(Property p, Activity activity);
 }

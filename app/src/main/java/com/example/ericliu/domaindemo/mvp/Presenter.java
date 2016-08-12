@@ -16,11 +16,9 @@
 
 package com.example.ericliu.domaindemo.mvp;
 
-public interface Presenter<T> {
+public interface Presenter<T extends DisplayView> {
 
-    void setView(T view);
-
-    void onViewCreated(boolean isConfigurationChange);
+    void onViewCreated(T t, boolean isConfigurationChange);
 
     /**
      * de-reference the View here if you wish to use the same instance of the HomePresenter across configuration changes

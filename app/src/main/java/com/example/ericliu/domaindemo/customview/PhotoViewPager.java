@@ -1,12 +1,12 @@
 package com.example.ericliu.domaindemo.customview;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -68,6 +68,11 @@ public class PhotoViewPager extends ViewPager {
         public int getCount() {
             return mUriList.size();
         }
+
+        @Override
+        public float getPageWidth(int position) {
+            return 0.75f;
+        }
     }
 
     public static class ImageFragment extends Fragment{
@@ -83,17 +88,17 @@ public class PhotoViewPager extends ViewPager {
             Bundle bundle = new Bundle();
             bundle.putParcelable(ARG_IMAGE_URL, url);
             fragment.setArguments(bundle);
-            return null;
+            return fragment;
         }
 
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            ImageView ivPhoto = new ImageView(getContext());
+            ImageView ivPhoto = new ImageView(getActivity());
             Bundle bundle = getArguments();
             Uri imageUrl = bundle.getParcelable(ARG_IMAGE_URL);
 
-            Picasso.with(getContext()).load(imageUrl).into(ivPhoto);
+            Picasso.with(getActivity()).load(imageUrl).into(ivPhoto);
 
             return ivPhoto;
         }

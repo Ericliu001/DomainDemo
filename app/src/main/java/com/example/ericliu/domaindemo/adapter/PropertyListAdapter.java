@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.example.ericliu.domaindemo.R;
 import com.example.ericliu.domaindemo.ui.EliteViewHolder;
 import com.example.ericliu.domaindemo.ui.OrdinaryViewHolder;
-import com.example.ericliu.domaindemo.ui.PropertyListPresenter;
+import com.example.ericliu.domaindemo.ui.PropertyListContract;
 
 /**
  * Created by eric.liu on 27/05/15.
@@ -21,10 +21,10 @@ public class PropertyListAdapter extends RecyclerView.Adapter {
 
     }
 
-    private final PropertyListPresenter mPresenter;
+    private final PropertyListContract.PropertyListPresenter mPresenter;
 
 
-    public PropertyListAdapter(PropertyListPresenter presenter) {
+    public PropertyListAdapter(PropertyListContract.PropertyListPresenter presenter) {
 
         this.mPresenter = presenter;
     }

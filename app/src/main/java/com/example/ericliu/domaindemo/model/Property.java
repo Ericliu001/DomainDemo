@@ -48,10 +48,6 @@ public class Property {
     private int isElite;
 
 
-    public List<String> getImageUrls() {
-        return imageUrls;
-    }
-
     @SerializedName("ImageUrls")
     private List<String> imageUrls;
 
@@ -93,5 +89,9 @@ public class Property {
 
     public int getIsElite() {
         return isElite;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
     }
 }

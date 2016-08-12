@@ -11,8 +11,9 @@ import java.util.List;
  * Created by ericliu on 11/08/2016.
  */
 
-public class PropertyListPresenterImpl implements PropertyListPresenter {
+public class PropertyListPresenterImpl implements PropertyListContract.PropertyListPresenter {
     private List<Property> mList;
+    private PropertyListContract.PropertyListView mDisplayView;
 
 
     public PropertyListPresenterImpl() {
@@ -37,17 +38,19 @@ public class PropertyListPresenterImpl implements PropertyListPresenter {
 
     @Override
     public void onBindViewHolder(EliteViewHolder holder, int position) {
-        holder.setItemData(mList.get(position));
+        holder.displayTexts(mList.get(position));
+        holder.displayImages(mList.get(position), mDisplayView.activity());
     }
 
     @Override
     public void onBindViewHolder(OrdinaryViewHolder holder, int position) {
-        holder.setItemData(mList.get(position));
+        holder.displayTexts(mList.get(position));
     }
 
 
     @Override
-    public void onViewCreated(boolean isConfigurationChange) {
+    public void onViewCreated(PropertyListContract.PropertyListView displayView, boolean isConfigurationChange) {
+        mDisplayView = displayView;
         if (!isConfigurationChange) {
             loadPropertyList();
         }
@@ -65,12 +68,7 @@ public class PropertyListPresenterImpl implements PropertyListPresenter {
 
 
     @Override
-    public void setView(Object view) {
-        // not used in this case as there is no user action.
-    }
-
-    @Override
     public void onViewDestroyed() {
-        // don't need to do anything here as the presenter is not holding references of the Activity in this case.
+        mDisplayView = new PropertyListContract.StubView();
     }
 }

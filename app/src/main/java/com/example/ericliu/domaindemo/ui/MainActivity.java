@@ -1,5 +1,6 @@
 package com.example.ericliu.domaindemo.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,13 +11,13 @@ import com.example.ericliu.domaindemo.R;
 import com.example.ericliu.domaindemo.adapter.PropertyListAdapter;
 import com.example.ericliu.domaindemo.util.CacheFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PropertyListContract.PropertyListView {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private PropertyListAdapter mAdapter;
-    private PropertyListPresenter mPropertyListPresenter;
+    private PropertyListContract.PropertyListPresenter mPropertyListPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +41,15 @@ public class MainActivity extends AppCompatActivity {
     private void setupPresenter(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             mPropertyListPresenter = new PropertyListPresenterImpl();
-            mPropertyListPresenter.onViewCreated(false);
-            CacheFragment<PropertyListPresenter> cacheFragment = new CacheFragment<>();
+            mPropertyListPresenter.onViewCreated(this, false);
+            CacheFragment<PropertyListContract.PropertyListPresenter> cacheFragment = new CacheFragment<>();
             cacheFragment.setData(mPropertyListPresenter);
             getFragmentManager().beginTransaction().add(cacheFragment, TAG).commit();
         } else {
-            CacheFragment<PropertyListPresenter> cacheFragment;
-            cacheFragment = (CacheFragment<PropertyListPresenter>) getFragmentManager().findFragmentByTag(TAG);
+            CacheFragment<PropertyListContract.PropertyListPresenter> cacheFragment;
+            cacheFragment = (CacheFragment<PropertyListContract.PropertyListPresenter>) getFragmentManager().findFragmentByTag(TAG);
             mPropertyListPresenter = cacheFragment.getData();
-            mPropertyListPresenter.onViewCreated(true);
+            mPropertyListPresenter.onViewCreated(this, true);
         }
     }
 
@@ -56,5 +57,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         mPropertyListPresenter.onViewDestroyed();
         super.onDestroy();
+    }
+
+    @Override
+    public Activity activity() {
+        return this;
     }
 }

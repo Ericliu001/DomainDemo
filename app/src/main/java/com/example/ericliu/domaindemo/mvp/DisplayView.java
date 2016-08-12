@@ -18,7 +18,7 @@ package com.example.ericliu.domaindemo.mvp;
 
 import android.app.Activity;
 
-public interface DisplayView<T> {
+public interface DisplayView<T extends  Presenter> {
 
     Activity activity();
 

@@ -2,6 +2,8 @@ package com.example.ericliu.domaindemo.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by ericliu on 10/08/2016.
  */
@@ -44,6 +46,14 @@ public class Property {
 
     @SerializedName("IsElite")
     private int isElite;
+
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    @SerializedName("ImageUrls")
+    private List<String> imageUrls;
 
     public String getAgencyLogoUrl() {
         return agencyLogoUrl;

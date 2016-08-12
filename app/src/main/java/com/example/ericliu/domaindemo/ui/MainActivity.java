@@ -22,17 +22,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            mPropertyListPresenter = new PropertyListPresenterImpl();
-            mPropertyListPresenter.onViewCreated(false);
-            CacheFragment<PropertyListPresenter> cacheFragment = new CacheFragment<>();
-            getFragmentManager().beginTransaction().add(cacheFragment, TAG).commit();
-        } else {
-            CacheFragment<PropertyListPresenter> cacheFragment;
-            cacheFragment = (CacheFragment<PropertyListPresenter>) getFragmentManager().findFragmentByTag(TAG);
-            mPropertyListPresenter = cacheFragment.getData();
-            mPropertyListPresenter.onViewCreated(true);
-        }
+        setupPresenter(savedInstanceState);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -45,6 +35,21 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+    }
+
+    private void setupPresenter(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            mPropertyListPresenter = new PropertyListPresenterImpl();
+            mPropertyListPresenter.onViewCreated(false);
+            CacheFragment<PropertyListPresenter> cacheFragment = new CacheFragment<>();
+            cacheFragment.setData(mPropertyListPresenter);
+            getFragmentManager().beginTransaction().add(cacheFragment, TAG).commit();
+        } else {
+            CacheFragment<PropertyListPresenter> cacheFragment;
+            cacheFragment = (CacheFragment<PropertyListPresenter>) getFragmentManager().findFragmentByTag(TAG);
+            mPropertyListPresenter = cacheFragment.getData();
+            mPropertyListPresenter.onViewCreated(true);
+        }
     }
 
     @Override

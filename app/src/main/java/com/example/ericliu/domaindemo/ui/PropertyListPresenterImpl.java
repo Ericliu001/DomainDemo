@@ -42,7 +42,7 @@ public class PropertyListPresenterImpl implements PropertyListPresenter {
 
     @Override
     public void onBindViewHolder(OrdinaryViewHolder holder, int position) {
-
+        holder.setItemData(mList.get(position));
     }
 
 

@@ -6,6 +6,13 @@ import com.example.ericliu.domaindemo.repository.PropertyRemoteRepo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import rx.Single;
+import rx.SingleSubscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by ericliu on 11/08/2016.
@@ -14,6 +21,7 @@ import java.util.List;
 public class PropertyListPresenterImpl implements PropertyListContract.PropertyListPresenter {
     private List<Property> mList;
     private PropertyListContract.PropertyListView mDisplayView;
+    private Subscription mPropertyListResultSubscripton;
 
 
     public PropertyListPresenterImpl() {
@@ -58,18 +66,41 @@ public class PropertyListPresenterImpl implements PropertyListContract.PropertyL
     }
 
     private void loadPropertyList() {
-        PropertyRemoteRepo remoteRepo = new PropertyRemoteRepo();
-        try {
-            List<Property> propertyList = remoteRepo.query(null);
-            mList = new ArrayList<>(propertyList);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        Single<List<Property>> weatherResultSingle = Single.fromCallable(new Callable<List<Property>>() {
+            @Override
+            public List<Property> call() throws Exception {
+                final PropertyRemoteRepo remoteRepo = new PropertyRemoteRepo();
+                return remoteRepo.query(null);
+            }
+        });
+
+        mPropertyListResultSubscripton = weatherResultSingle
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleSubscriber<List<Property>>() {
+                    @Override
+                    public void onSuccess(List<Property> value) {
+                        mList = new ArrayList<Property>(value);
+                        mDisplayView.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onError(Throwable error) {
+
+                    }
+                });
     }
+
+
+
 
 
     @Override
     public void onViewDestroyed() {
         mDisplayView = new PropertyListContract.StubView();
+        if (mPropertyListResultSubscripton != null && !mPropertyListResultSubscripton.isUnsubscribed()) {
+            mPropertyListResultSubscripton.unsubscribe();
+        }
     }
 }

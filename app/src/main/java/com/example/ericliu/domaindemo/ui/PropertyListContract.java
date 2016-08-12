@@ -13,6 +13,7 @@ import com.example.ericliu.domaindemo.mvp.Presenter;
 public interface PropertyListContract {
 
     interface PropertyListView extends DisplayView<PropertyListPresenter> {
+        void notifyDataSetChanged();
     }
 
 
@@ -35,6 +36,11 @@ public interface PropertyListContract {
         @Override
         public Activity activity() {
             return null;
+        }
+
+        @Override
+        public void notifyDataSetChanged() {
+
         }
     }
 }

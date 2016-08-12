@@ -63,4 +63,9 @@ public class MainActivity extends AppCompatActivity implements PropertyListContr
     public Activity activity() {
         return this;
     }
+
+    @Override
+    public void notifyDataSetChanged() {
+        mAdapter.notifyDataSetChanged();
+    }
 }

@@ -45,6 +45,7 @@ public class PropertyListPresenterImpl implements PropertyListContract.PropertyL
     @Override
     public void onBindViewHolder(OrdinaryViewHolder holder, int position) {
         holder.displayTexts(mList.get(position));
+        holder.displayImages(mList.get(position), mDisplayView.activity());
     }
 
 
